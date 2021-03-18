@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://nodes/Paddle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://nodes/Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://nodes/Ball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://nodes/Player1Controller.gd" type="Script" id=4]
+[ext_resource path="res://nodes/Player2Controller.gd" type="Script" id=5]
+[ext_resource path="res://Scene/Main.gd" type="Script" id=6]
+[ext_resource path="res://Pixeboy-z8XGD.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 44, 218 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 44
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 43
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node2D"]
+position = Vector2( 0, 1 )
+script = ExtResource( 6 )
+
+[node name="Background" parent="." instance=ExtResource( 2 )]
+
+[node name="Ball" parent="." instance=ExtResource( 3 )]
+position = Vector2( 322, 242 )
+velocity = Vector2( -150, 50 )
+
+[node name="PaddlePlayer" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12, 232 )
+script = ExtResource( 4 )
+
+[node name="PaddlePlayer2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 630, 240 )
+script = ExtResource( 5 )
+
+[node name="SideWallLeft" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SideWallLeft"]
+position = Vector2( -45, 237 )
+shape = SubResource( 1 )
+
+[node name="SideWallRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SideWallRight"]
+position = Vector2( 685, 239 )
+shape = SubResource( 1 )
+
+[node name="Player1 Score" type="Label" parent="."]
+margin_left = 160.0
+margin_top = 72.0
+margin_right = 265.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 2 )
+text = "Teste
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player2 Score" type="Label" parent="."]
+margin_left = 366.0
+margin_top = 72.0
+margin_right = 471.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 3 )
+text = "Teste
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="body_entered" from="SideWallLeft" to="." method="_on_SideWallLeft_body_entered"]
+[connection signal="body_entered" from="SideWallRight" to="." method="_on_SideWallRight_body_entered"]
